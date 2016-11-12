@@ -117,6 +117,10 @@ Follow the LOOK labels in the following files:
 * `particle.vert`
 * `particle.frag`
 
+Don't worry about reading and understanding every single line of code, just try
+to understand what each LOOK block describes in terms of how Vulkan controls the
+GPU (commands encapsulating pipelines + buffers, running on Queues).
+
 ## 2.2: Getting movement
 
 Complete the TODOs `vulkanBoids.cpp`.
@@ -134,8 +138,24 @@ SPIRV versions of these using the `generate-spirv.bat` script.
 ## Part 3: README.md
 Include a GIF of your final simulation. Answer the following questions:
 
+* Why do you think Vulkan expects explicit descriptors for things like
+generating pipelines and commands? HINT: this may relate to something in the
+comments about some components using pre-allocated GPU memory.
+* Describe a situation besides flip-flop buffers in which you may need multiple
+descriptor sets to fit one descriptor layout.
 * What are some problems to keep in mind when using multiple Vulkan queues?
   * take into consideration that different queues may be backed by different hardware
   * take into consideration that the same buffer may be used across multiple queues
 * What is one advantage of using compute commands that can share data with a
 rendering pipeline?
+
+## Part 4: Enrichment?
+For more details on how the Vulkan rendering pipeline works, we strongly
+encourage you to check out the tutorial at vulkan-tutorial.com.
+
+If you want to tackle adding features to your Vulkan flocking, such as mouse
+interaction or an extension to 3D flocking, a good place to take a first look
+is Sascha Willems's original Vulkan compute particle simulation.
+We built his project off that simulation, which demonstrates how to use
+uniforms with the rendering pipeline and how to use the framework's mouse and
+keyboard interaction.
