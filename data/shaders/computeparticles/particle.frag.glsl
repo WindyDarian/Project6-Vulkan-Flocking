@@ -10,5 +10,5 @@ layout (location = 0) out vec4 outFragColor;
 
 void main ()
 {
-	outFragColor.rgb = vec3(inColor.x, abs(inColor.y), -inColor.x) * 10.0;
-}
+	//outFragColor.rgb = vec3(inColor.x, abs(inColor.y), -inColor.x) * 10.0;
+    outFragColor.rgb = vec3(1.0, 1.0, 1.0);
