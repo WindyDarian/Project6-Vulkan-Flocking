@@ -22,6 +22,7 @@
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/random.hpp>
 
 #include <vulkan/vulkan.h>
 #include "vulkanexamplebase.h"
@@ -158,6 +159,7 @@ public:
 		{
 			particle.pos = glm::vec2(rDistribution(rGenerator), rDistribution(rGenerator));
 			// TODO: add randomized velocities with a slight scale here, something like 0.1f.
+			particle.vel = glm::diskRand(0.1f);
 		}
 
 		VkDeviceSize storageBufferSize = particleBuffer.size() * sizeof(Particle);
@@ -244,7 +246,7 @@ public:
 			VERTEX_BUFFER_BIND_ID,
 			1,
 			VK_FORMAT_R32G32_SFLOAT,
-			offsetof(Particle, pos)); // TODO: change this so that we can color the particles based on velocity.
+			offsetof(Particle, vel)); // TODO: change this so that we can color the particles based on velocity.
 
 		// vertices.inputState encapsulates everything we need for these particular buffers to
 		// interface with the graphics pipeline.
@@ -639,7 +641,9 @@ public:
 			// How does this influence flip-flopping in draw()?
 			// Try drawing with storageBufferA instead of storageBufferB. What happens? Why?
 			VkDeviceSize offsets[1] = { 0 };
+			//vkCmdBindVertexBuffers(drawCmdBuffers[i], VERTEX_BUFFER_BIND_ID, 1, &compute.storageBufferA.buffer, offsets);
 			vkCmdBindVertexBuffers(drawCmdBuffers[i], VERTEX_BUFFER_BIND_ID, 1, &compute.storageBufferB.buffer, offsets);
+			
 			vkCmdDraw(drawCmdBuffers[i], PARTICLE_COUNT, 1, 0, 0);
 
 			vkCmdEndRenderPass(drawCmdBuffers[i]);
