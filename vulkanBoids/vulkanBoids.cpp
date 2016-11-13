@@ -549,8 +549,8 @@ public:
 			// on one frame, we use one descriptorSet with the compute pass,
 			// on the next frame, we use the other.
 			// What has to be different about how the second descriptorSet is written here?
-			// Binding 0 : Particle position storage buffer
 			
+			// Binding 0 : Particle position storage buffer
 			vkTools::initializers::writeDescriptorSet(
 				compute.descriptorSets[1], 
 				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
@@ -593,7 +593,7 @@ public:
 		VK_CHECK_RESULT(vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE));
 
 		VulkanExampleBase::submitFrame();
-
+		
 		// LOOK: wait for fence that was submitted with the compute commandBuffer to complete.
 		// Then, reset it for the next round of compute
 		vkWaitForFences(device, 1, &compute.fence, VK_TRUE, UINT64_MAX);
@@ -617,7 +617,7 @@ public:
 		// Feel free to use std::swap here. You should need it twice.
 		std::swap(compute.descriptorSets[0], compute.descriptorSets[1]);
 		std::swap(compute.storageBufferA, compute.storageBufferB);
-		// TODO: create different command buffers and pingpong them instead?
+		// TODO: ping-pong command buffers?
 	}
 
 	// Record command buffers for drawing using the graphics pipeline
